@@ -1,0 +1,14 @@
+version: '3'
+services:
+  notebook:
+    # 日本語対応した独自datascience-notebookイメージを使用
+    image: jpdatascience:latest
+    user: root
+    ports:
+      - "${DATASCIENCE_NOTEBOOKS_PORT}:8888"
+    environment:
+      - GRANT_SUDO=yes
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./:/home/jovyan/work
+    command: start-notebook.sh --NotebookApp.password="${DATASCIENCE_NOTEBOOKS_PASSWORD}"
