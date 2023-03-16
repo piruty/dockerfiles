@@ -2,14 +2,18 @@ FROM ubuntu:20.04
 
 WORKDIR /work
 
-RUN apt update && apt upgrade -y
+RUN apt-get update && apt-get upgrade -y
 
 # 日本語化
-RUN apt install -y locales \
+RUN apt-get install -y locales \
     && locale-gen ja_JP.UTF-8 \
     && echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc
 
-RUN apt install -y git
+# install man
+RUN apt-get install man-db -y \
+    && mv /usr/bin/man.REAL /usr/bin/man
 
+# シェル160本ノック 問題環境用意
+RUN apt-get install -y git
 RUN git clone https://github.com/shellgei/shellgei160
 
